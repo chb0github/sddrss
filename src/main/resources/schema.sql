@@ -1,6 +1,5 @@
-DROP SCHEMA IF EXISTS SDR;
-CREATE SCHEMA IF NOT EXISTS SDR;
-USE SDR;
+
+CREATE SCHEMA SDR;
 
 CREATE TABLE users (
   username VARCHAR(50) NOT NULL PRIMARY KEY,
@@ -12,7 +11,7 @@ CREATE TABLE Roles (
 );
 
 CREATE TABLE authorities (
-  id       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id       INT PRIMARY KEY NOT NULL IDENTITY,
   username VARCHAR(50)     NOT NULL,
   role     VARCHAR(50)     NOT NULL,
   FOREIGN KEY (username) REFERENCES users (username),
@@ -21,7 +20,7 @@ CREATE TABLE authorities (
 );
 
 CREATE TABLE groups (
-  id   BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id   BIGINT PRIMARY KEY NOT NULL IDENTITY,
   name VARCHAR(50)        NOT NULL
 );
 
@@ -32,7 +31,7 @@ CREATE TABLE group_authorities (
 );
 
 CREATE TABLE group_members (
-  id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+  id       BIGINT PRIMARY KEY IDENTITY,
   username VARCHAR(50) NOT NULL,
   group_id BIGINT      NOT NULL,
   FOREIGN KEY (group_id) REFERENCES groups (id)
@@ -46,20 +45,20 @@ CREATE TABLE persistent_logins (
 );
 
 CREATE TABLE acl_sid (
-  id        BIGINT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id        BIGINT       NOT NULL PRIMARY KEY IDENTITY,
   principal BOOLEAN      NOT NULL,
   sid       VARCHAR(100) NOT NULL,
   UNIQUE (sid, principal)
 );
 
 CREATE TABLE acl_class (
-  id    BIGINT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id    BIGINT       NOT NULL PRIMARY KEY IDENTITY,
   class VARCHAR(100) NOT NULL,
   UNIQUE (class)
 );
 
 CREATE TABLE acl_object_identity (
-  id                 BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id                 BIGINT PRIMARY KEY NOT NULL IDENTITY,
   object_id_class    BIGINT             NOT NULL,
   object_id_identity BIGINT             NOT NULL,
   parent_object      BIGINT,
@@ -72,7 +71,7 @@ CREATE TABLE acl_object_identity (
 );
 
 CREATE TABLE acl_entry (
-  id                  BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id                  BIGINT PRIMARY KEY NOT NULL IDENTITY,
 
   acl_object_identity BIGINT             NOT NULL,
   ace_order           INT                NOT NULL,

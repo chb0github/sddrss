@@ -3,6 +3,7 @@ package org.bongiorno.sdrss;
 import static org.bongiorno.sdrss.domain.security.AclEntry.Permission.READ;
 import static org.bongiorno.sdrss.domain.security.AclEntry.Permission.WRITE;
 
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.bongiorno.sdrss.domain.resources.Candidate;
 import org.bongiorno.sdrss.domain.security.AclEntry;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
@@ -21,6 +23,9 @@ import org.springframework.data.rest.core.event.AbstractRepositoryEventListener;
 import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 import org.springframework.hateoas.Identifiable;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -52,7 +57,12 @@ public class SdrExampleApplication {
 
     }
 
+    @Bean
+    public DataSource dataSource() {
 
+        // no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).build();
+    }
     @Component
     @RepositoryEventHandler
     public static class CanidateEventHandler {
