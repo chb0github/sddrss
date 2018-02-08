@@ -4,9 +4,11 @@ package org.bongiorno.sdrss.domain.resources
 import java.util.Date
 import org.springframework.hateoas.Identifiable
 
-interface Post : Identifiable<Long> {
+interface Post  {
 
-    val date: Date
+    var id:Long?
 
-    val name: String
+    var date: Date?
+
+    var name: String?
 }

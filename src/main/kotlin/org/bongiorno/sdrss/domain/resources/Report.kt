@@ -6,8 +6,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-data class Report(@Id @GeneratedValue val id: Long,
-                     override val date: Date,
-                     override val name:String) : Post {
-    override fun getId(): Long = id
-}
+data class Report(@Id @GeneratedValue override var id: Long? = null,
+                  override var date: Date? = null,
+                  override var name:String? = null) : Post

@@ -81,7 +81,7 @@ INSERT INTO acl_entry (id, acl_object_identity, ace_order, sid, mask, granting, 
 CREATE TABLE candidate (
   id bigint NOT NULL IDENTITY ,
   date datetime NOT NULL,
-  name varchar(255) NOT NULL,
+  name varchar(255) NOT NULL
 );
 
 --
@@ -102,7 +102,7 @@ INSERT INTO candidate (id, date, name) VALUES
 CREATE TABLE form (
   id bigint NOT NULL IDENTITY,
   date datetime NOT NULL,
-  name varchar(255) NOT NULL,
+  name varchar(255) NOT NULL
 ) ;
 
 --
@@ -123,7 +123,7 @@ INSERT INTO form (id, date, name) VALUES
 CREATE TABLE report (
   id bigint NOT NULL IDENTITY,
   date datetime NOT NULL,
-  name varchar(255) NOT NULL,
+  name varchar(255) NOT NULL
 )  ;
 
 --

@@ -8,7 +8,7 @@ import java.util.*
 
 interface UserRepository : CrudRepository<User, String> {
     @Query("select o from User o where o.username = ?#{principal.username} or 1=?#{hasRole('ROLE_ADMIN') ? 1 : 0}")
-    override fun findAll(): Iterable<org.bongiorno.sdrss.domain.security.User>
+    override fun findAll(): Iterable<User>
 
 //    @PostAuthorize("hasPermission(returnObject, 'READ')")
     override fun findById(id: String?): Optional<User>?

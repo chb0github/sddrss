@@ -20,9 +20,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+      <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
         <java.version>1.8</java.version>
-        <kotlin.version>1.1.2-4</kotlin.version>
+        <kotlin.version>1.2.21</kotlin.version>
     </properties>
 
     <dependencies>
@@ -36,6 +36,11 @@
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-reflect</artifactId>
         <version>${kotlin.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-kotlin</artifactId>
+        <version>2.9.4</version>
       </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -71,11 +76,12 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-java8</artifactId>
-            <version>5.0.1.Final</version>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+          <version>5.3.0.Beta2</version>
         </dependency>
-        <dependency>
+
+      <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.3.1</version>
@@ -115,7 +121,20 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
+              <configuration>
+                <compilerPlugins>
+                  <plugin>jpa</plugin>
+                  <!--<plugin>spring</plugin>-->
+                </compilerPlugins>
+              </configuration>
 
+              <dependencies>
+                <dependency>
+                  <groupId>org.jetbrains.kotlin</groupId>
+                  <artifactId>kotlin-maven-noarg</artifactId>
+                  <version>${kotlin.version}</version>
+                </dependency>
+              </dependencies>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -176,8 +195,8 @@
             <artifactId>docker-maven-plugin</artifactId>
             <version>1.0.0</version>
             <configuration>
-              <imageName>example</imageName>
-              <baseImage>java</baseImage>
+              <imageName>${project.build.finalName}</imageName>
+              <baseImage>anapsix/alpine-java</baseImage>
               <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
               <!-- copy the service's jar file from target into the root directory of the image -->
               <resources>
