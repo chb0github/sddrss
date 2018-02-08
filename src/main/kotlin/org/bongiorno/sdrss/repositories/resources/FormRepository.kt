@@ -2,16 +2,15 @@ package org.bongiorno.sdrss.repositories.resources
 
 import org.bongiorno.sdrss.domain.resources.Form
 import org.springframework.data.repository.CrudRepository
-import org.springframework.security.access.prepost.PostAuthorize
-import org.springframework.security.access.prepost.PostFilter
+import java.util.*
 
 
-interface FormRepository : org.springframework.data.repository.CrudRepository<Form, Long> {
+interface FormRepository : CrudRepository<Form, Long> {
 
 
     @org.springframework.security.access.prepost.PostFilter("hasPermission(filterObject, 'READ')")
-    override fun findAll(): Iterable<org.bongiorno.sdrss.domain.resources.Form>
+    override fun findAll(): Iterable<Form>
 
     @org.springframework.security.access.prepost.PostAuthorize("hasPermission(returnObject, 'WRITE')")
-    override fun findOne(aLong: Long?): org.bongiorno.sdrss.domain.resources.Form
+    override fun findById(aLong: Long?): Optional<Form>?
 }

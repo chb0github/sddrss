@@ -29,7 +29,6 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 
 
-@Getter
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -38,15 +37,18 @@ public class User implements UserDetails, Identifiable<String>{
 
     @Id
     @NotNull
+    @Getter
     private String username;
 
     @NotNull
+    @Getter
     private String password;
 
     @NotNull
     private Boolean enabled;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @Getter
     private Collection<Authority> authorities;
 
     public User(String username, String password, Boolean enabled, String ... authorities) {

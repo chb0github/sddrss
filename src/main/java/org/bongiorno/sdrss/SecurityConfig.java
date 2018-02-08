@@ -120,7 +120,7 @@ public class SecurityConfig {
     }
     @Bean
     UserDetailsService uds(UserRepository users) {
-        return users::findOne;
+        return s -> users.findById(s).orElse(null);
     }
 
     @Bean
